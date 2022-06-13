@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+	<link href="webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+		integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+	<script type="text/javascript" src="webjars/jquery/3.4.1/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/js/main.js" th:src="@{js/main.js}"></script>
+	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="style.css">
+	<meta charset="IS0-8859-1">
+	<title>Series</title>
+</head>
+
+<body>
+
+	<div class="d-flex" id="wrapper">
+	
+		<div class="border-end bg-white" id="sidebar-wrapper">
+
+			<div class="sidebar-heading border-bottom bg-light mt-1 text-center">
+				<a class="navbar-brand" href="#" style="text-decoration: none;color:black">
+					<img src="https://w7.pngwing.com/pngs/159/857/png-transparent-television-channel-mobile-television-illustration-tv-icons-television-rectangle-camera-icon.png"
+						width="30" height="30" class="d-inline-block align-top" alt="">
+					Fala Série
+				</a>
+			</div>
+			<div class="list-group list-group-flush">
+				<button type="button" class="btn btn-danger mt-4"><i class="fa fa-play-circle" aria-hidden="true"></i><a
+						style="text-decoration: none;color:white;" href="#!"> Series</ahref="#!"></button>
+				<a class="mb-4 ml-2 text-center" style="text-decoration:none;color:black;position:absolute;bottom:0;"
+					href="#!"><i class="fa fa-cloud" aria-hidden="true"></i> Sair</a>
+			</div>
+		</div>
+		
+		<div class="container pt-4 shadow-lg p-3 mb-5 mt-4 bg-white rounded">
+			<div>
+				<h5 class="card-header text-center">Pesquise uma série</h5>
+				<div class="container">
+					<div class="input-group mb-3 mt-2">
+						<input type="text" class="form-control"
+							placeholder="digite aqui uma série que você deseja procurar">
+						<div class="input-group-append">
+							<button class="btn btn-outline-danger" type="button">Buscar</button>
+						</div>
+					</div>
+					<h6 style="float:left;">Séries</h6>
+					<button type="button" class="btn btn-outline-danger" style="float:right;" data-toggle="modal"
+						data-target="#addModal">Adicionar Serie</button>
+					<table class="table table-stripped">
+
+						<tr class="bg-danger">
+							<td>Nome </td>
+							<td>Descrição</td>
+							<td>Ações</td>
+						</tr>
+						<tr th:each="serie:${series}">
+							<td th:text="${serie.nome}">Nome</td>
+							<td th:text="${serie.descricao}">Descrição</td>
+							<td>
+								<a th:href="@{/idserie/(Id=${serie.Id})}" class="btn btn editButton"><i
+										class="fa fa-paint-brush" aria-hidden="true"></i> Editar </a> <br>
+								<a th:href="@{/delete/(Id=${serie.Id})}" class="btn btn delButton"><i
+										class="fa fa-trash" aria-hidden="true"></i> Excluir</a>
+							</td>
+						</tr>
+
+					</table>
+
+				</div>
+
+				<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<form th:action="@{/create}" method="post">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Adicionar nova série</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+
+									<div class="form-group">
+										<label for="nome" class="col-form-label">Nome:</label>
+										<input type="text" class="form-control" id="nomeAdd" name="nome">
+									</div>
+
+									<div class="form-group">
+										<label for="descricao" class="col-form-label">Descrição:</label>
+										<input type="text" class="form-control" id="descricaoAdd" name="descricao">
+									</div>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-primary">Salvar</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<form th:action="@{/update}" method="put">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Editar série</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+
+									<div class="form-group">
+										<label for="Id" class="col-form-label">Id:</label>
+										<input type="text" class="form-control" id="IdEdit" name="Id">
+									</div>
+
+									<div class="form-group">
+										<label for="nome" class="col-form-label">Nome:</label>
+										<input type="text" class="form-control" id="nomeEdit" name="nome">
+									</div>
+
+									<div class="form-group">
+										<label for="descricao" class="col-form-label">Descrição:</label>
+										<input type="text" class="form-control" id="descricaoEdit" name="descricao">
+									</div>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Cancelar</button>
+									<button type="submit" class="btn btn-primary">Salvar</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal" tabindex="-1" role="dialog" id="delModal">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Deseja mesmo excluir?</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>Essa ação não pode ser desfeita.</p>
+							</div>
+							<div class="modal-footer">
+
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+								<a href="" type="button" class="btn btn-danger" id="delId">Excluir</a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>
